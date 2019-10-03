@@ -1,2 +1,2 @@
-# plugins_broker
-Interface for a generic message broker for Gerrit Code Review
+# Events Broker plugin for Gerrit Code Review
+API of a generic events broker for use with Gerrit Code Review
