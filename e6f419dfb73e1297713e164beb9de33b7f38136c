@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "45518e39_cf69bc29",
+        "filename": "README.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-10-06T16:22:35Z",
+      "side": 1,
+      "message": "Changed.You are right multi-site shouldn\u0027t be mentioned here but to be honest with you I\u0027ve just copied readme from global-refdb and adjusted to the broker api. I thought that both are really similar is therms of usage in Gerrit and other plugins",
+      "parentUuid": "41a9ff91_e27e7ff8",
+      "range": {
+        "startLine": 5,
+        "startChar": 40,
+        "endLine": 5,
+        "endChar": 61
+      },
+      "revId": "e6f419dfb73e1297713e164beb9de33b7f38136c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88031ee3_f93dec49",
         "filename": "pom.xml",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "d230c809_c90ec685",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-10-06T16:22:35Z",
+      "side": 1,
+      "message": "I\u0027ve just copied this from global-refdb, Should we update it there as well?",
+      "parentUuid": "88031ee3_f93dec49",
+      "range": {
+        "startLine": 23,
+        "startChar": 41,
+        "endLine": 23,
+        "endChar": 52
+      },
+      "revId": "e6f419dfb73e1297713e164beb9de33b7f38136c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eba996af_fb665927",
         "filename": "pom.xml",
         "patchSetId": 4
@@ -68,6 +116,30 @@
       "revId": "e6f419dfb73e1297713e164beb9de33b7f38136c",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96aca27_e1d6062a",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-10-06T16:22:35Z",
+      "side": 1,
+      "message": "Same as above: I\u0027ve just copied this from global-refdb, Should we update it there as well?",
+      "parentUuid": "eba996af_fb665927",
+      "range": {
+        "startLine": 24,
+        "startChar": 48,
+        "endLine": 24,
+        "endChar": 59
+      },
+      "revId": "e6f419dfb73e1297713e164beb9de33b7f38136c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     },
     {
       "key": {
@@ -102,6 +174,24 @@
       "revId": "e6f419dfb73e1297713e164beb9de33b7f38136c",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8683697a_2eb6d415",
+        "filename": "src/test/java/com/gerritforge/gerrit/eventbroker/FakeBrokerApi.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-10-06T16:22:35Z",
+      "side": 1,
+      "message": "Renamed and reimplemented with EvenBus.\nI\u0027ve took this convention from global-refdb where we have in-process refdb named FakeGlobalRefDatabase",
+      "parentUuid": "b3e4ace5_6b99b113",
+      "revId": "e6f419dfb73e1297713e164beb9de33b7f38136c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
