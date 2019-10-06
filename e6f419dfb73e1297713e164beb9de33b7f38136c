@@ -160,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fcf57e03_715db99e",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/SourceAwareEventWrapper.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-10-06T16:22:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe18ad6_d0beff6a",
+      "revId": "e6f419dfb73e1297713e164beb9de33b7f38136c",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3e4ace5_6b99b113",
         "filename": "src/test/java/com/gerritforge/gerrit/eventbroker/FakeBrokerApi.java",
         "patchSetId": 4
