@@ -22,6 +22,30 @@
       "revId": "c097ee2c41193ae237102f24d5a8908243972d0f",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6995c623_a213c0b5",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/SourceAwareEventWrapper.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-10-07T07:48:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60293c1c_cbdd0a7e",
+      "range": {
+        "startLine": 25,
+        "startChar": 23,
+        "endLine": 25,
+        "endChar": 66
+      },
+      "revId": "c097ee2c41193ae237102f24d5a8908243972d0f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
