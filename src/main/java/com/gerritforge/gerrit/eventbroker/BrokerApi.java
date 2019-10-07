@@ -27,7 +27,7 @@ public interface BrokerApi {
    * @param event to be send to the topic
    * @return true if the event was successfully sent. False otherwise.
    */
-  boolean send(String topic, Event event);
+  boolean send(String topic,Event event);
 
   /**
    * Receive asynchronously events from a topic.

@@ -40,7 +40,7 @@ public class SourceAwareEventWrapper {
    *
    * @return {@code Event} json representation
    */
-  public JsonObject getBody() {
+    public JsonObject getBody() {
     return body;
   }
 
