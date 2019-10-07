@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1fabe5c_878ec6cd",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/SourceAwareEventWrapper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2019-10-07T09:54:56Z",
+      "side": 1,
+      "message": "Nit: missing new line. Have you formatted this with Google-java-format?",
+      "revId": "c5375c7012b232eb5d2f9d28b0ab9015ca05a1fc",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
