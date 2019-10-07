@@ -1,0 +1,7 @@
+Verified+1: Jenkins at Gerrit-CI <jenkins@gerritforge.com>
+Code-Review+2: Marcin Czech <maczech@gmail.com>
+Submitted-by: Marcin Czech <maczech@gmail.com>
+Submitted-at: Mon, 07 Oct 2019 13:07:58 +0000
+Reviewed-on: https://review.gerrithub.io/c/GerritForge/events-broker/+/470619
+Project: GerritForge/events-broker
+Branch: refs/heads/stable-3.0
