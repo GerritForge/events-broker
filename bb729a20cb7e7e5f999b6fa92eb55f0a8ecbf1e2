@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b43b9d_76f00d6b",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/SourceAwareEventWrapper.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2019-10-07T11:34:52Z",
+      "side": 1,
+      "message": "Here the new line is still missing.",
+      "revId": "bb729a20cb7e7e5f999b6fa92eb55f0a8ecbf1e2",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
