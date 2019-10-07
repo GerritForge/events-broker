@@ -22,6 +22,30 @@
       "revId": "03b84b7e82d44db47d0bf968ad4bc802a863b76f",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21db0283_7252bc9e",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-07T12:04:11Z",
+      "side": 1,
+      "message": "True, let me change it to 3.0.0",
+      "parentUuid": "53a42aff_c4f5d10f",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "03b84b7e82d44db47d0bf968ad4bc802a863b76f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
