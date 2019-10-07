@@ -22,6 +22,30 @@
       "revId": "3612cfe4e4298fe34c980982ea121dc51b07db08",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "119ac604_5ed7d2d2",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-10-07T12:01:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5315a76b_045f6d93",
+      "range": {
+        "startLine": 140,
+        "startChar": 40,
+        "endLine": 140,
+        "endChar": 45
+      },
+      "revId": "3612cfe4e4298fe34c980982ea121dc51b07db08",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
