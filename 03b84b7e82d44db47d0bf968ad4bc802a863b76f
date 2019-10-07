@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53a42aff_c4f5d10f",
+        "filename": "pom.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2019-10-07T11:43:25Z",
+      "side": 1,
+      "message": "Why it was changed from major.minor.patch to only major.minor and patch was omited? Change it to 3.0.0, see: [1].\n\n* [1] https://semver.org",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 16
+      },
+      "revId": "03b84b7e82d44db47d0bf968ad4bc802a863b76f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
