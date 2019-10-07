@@ -68,21 +68,38 @@ public class SourceAwareEventWrapper {
       this.sourceInstanceId = sourceInstanceId;
       this.eventCreatedOn = eventCreatedOn;
     }
-    /** Unique event id. */
+    /**
+     * Unique event id.
+     *
+     * @return uuid
+     */
     public UUID getEventId() {
       return eventId;
     }
 
-    /** Type of an underlaying {@code Event} object. */
+    /**
+     * Type of an underlaying {@code Event} object.
+     *
+     * @return eventType
+     */
     public String getEventType() {
       return eventType;
     }
 
-    /** Gerrit server instance id from which event was sent. */
+    /**
+     * Gerrit server instance id from which event was sent.
+     *
+     * @return uuid
+     */
     public UUID getSourceInstanceId() {
       return sourceInstanceId;
     }
-    /** Underlaying event creation time in seconds. */
+
+    /**
+     * Underlying event creation time in seconds.
+     *
+     * @return eventCreatedOn
+     */
     public Long getEventCreatedOn() {
       return eventCreatedOn;
     }
