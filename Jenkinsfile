@@ -4,9 +4,13 @@ pipeline {
         stage('GJF') {
             steps {
                 sh 'mvn process-sources'
-                def formatOut = sh (script: 'git status --porcelain', returnStdout: true)
-                if (formatOut.trim()) {
-                    gerritReview labels: [Fomatting: -1], message: "Need formatting on: \n${formatOut}"
+                script {
+                    def formatOut = sh (script: 'git status --porcelain', returnStdout: true)
+                    if (formatOut.trim()) {
+                        gerritReview labels: [Fomatting: -1], message: "Need formatting on: \n${formatOut}"
+                    } else {
+                        gerritReview labels: [Fomatting: 1]
+                    }
                 }
             }
         }
