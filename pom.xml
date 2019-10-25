@@ -4,7 +4,7 @@
 
     <groupId>com.gerritforge</groupId>
     <artifactId>events-broker</artifactId>
-    <version>3.1-SNAPSHOT</version>
+    <version>3.1.0-rc1</version>
     <packaging>jar</packaging>
 
     <name>events-broker</name>
@@ -38,7 +38,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <gerrit.version>3.0.2</gerrit.version>
+        <gerrit.version>${project.version}</gerrit.version>
     </properties>
 
     <dependencies>
