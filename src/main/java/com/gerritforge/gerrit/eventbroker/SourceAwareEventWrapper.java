@@ -22,9 +22,9 @@ import com.google.gson.JsonObject;
 import java.util.UUID;
 
 /**
- * Purpose of this class is to enrich an existing {@link Event} object with the information about
- * the source that produced it, including the Gerrit server instance id. Additionally this class
- * contains an event-id, event-type and event-created-on fields.
+ * Enrich an existing {@link Event} object with the information about the source that produced it,
+ * including the Gerrit server instance id. Additionally this class contains an event-id, event-type
+ * and event-created-on fields.
  */
 public class SourceAwareEventWrapper {
 
