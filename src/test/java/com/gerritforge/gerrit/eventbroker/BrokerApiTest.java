@@ -15,14 +15,18 @@
 package com.gerritforge.gerrit.eventbroker;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.util.Arrays;
 import java.util.UUID;
 import java.util.function.Consumer;
 import org.junit.Before;
@@ -39,13 +43,13 @@ public class BrokerApiTest {
   @Captor ArgumentCaptor<SourceAwareEventWrapper> eventCaptor;
   Consumer<SourceAwareEventWrapper> eventConsumer;
 
-  BrokerApi objectUnderTest;
+  BrokerApi brokerApiUnderTest;
   UUID instanceId = UUID.randomUUID();
   private Gson gson = new Gson();
 
   @Before
   public void setup() {
-    objectUnderTest = new InProcessBrokerApi(instanceId);
+    brokerApiUnderTest = new InProcessBrokerApi(instanceId);
     eventConsumer = mockEventConsumer();
   }
 
@@ -53,12 +57,10 @@ public class BrokerApiTest {
   public void shouldSendEvent() {
     ProjectCreatedEvent event = new ProjectCreatedEvent();
 
-    SourceAwareEventWrapper expectedEvent = toSourceAwareEvent(event);
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
 
-    objectUnderTest.receiveAsync("topic", eventConsumer);
-
-    assertThat(objectUnderTest.send("topic", event)).isTrue();
-    compareWithExpectedEvent(eventConsumer, eventCaptor, expectedEvent);
+    assertThat(brokerApiUnderTest.send("topic", event)).isTrue();
+    compareWithExpectedEvent(eventConsumer, eventCaptor, toSourceAwareEvent(event));
   }
 
   @Test
@@ -67,21 +69,16 @@ public class BrokerApiTest {
     ArgumentCaptor<SourceAwareEventWrapper> secondArgCaptor =
         ArgumentCaptor.forClass(SourceAwareEventWrapper.class);
 
-    ProjectCreatedEvent eventForTopic = new ProjectCreatedEvent();
-    eventForTopic.projectName = "Project name";
-    SourceAwareEventWrapper expectedEventForTopic = toSourceAwareEvent(eventForTopic);
+    ProjectCreatedEvent eventForTopic = testProjectCreatedEvent("Project name");
+    ProjectCreatedEvent eventForTopic2 = testProjectCreatedEvent("Project name 2");
 
-    ProjectCreatedEvent eventForTopic2 = new ProjectCreatedEvent();
-    eventForTopic2.projectName = "Project name 2";
-    SourceAwareEventWrapper expectedEventForTopic2 = toSourceAwareEvent(eventForTopic2);
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+    brokerApiUnderTest.receiveAsync("topic2", secondConsumer);
+    brokerApiUnderTest.send("topic", eventForTopic);
+    brokerApiUnderTest.send("topic2", eventForTopic2);
 
-    objectUnderTest.receiveAsync("topic", eventConsumer);
-    objectUnderTest.receiveAsync("topic2", secondConsumer);
-    objectUnderTest.send("topic", eventForTopic);
-    objectUnderTest.send("topic2", eventForTopic2);
-
-    compareWithExpectedEvent(eventConsumer, eventCaptor, expectedEventForTopic);
-    compareWithExpectedEvent(secondConsumer, secondArgCaptor, expectedEventForTopic2);
+    compareWithExpectedEvent(eventConsumer, eventCaptor, toSourceAwareEvent(eventForTopic));
+    compareWithExpectedEvent(secondConsumer, secondArgCaptor, toSourceAwareEvent(eventForTopic2));
   }
 
   @Test
@@ -90,49 +87,121 @@ public class BrokerApiTest {
     ArgumentCaptor<SourceAwareEventWrapper> secondArgCaptor =
         ArgumentCaptor.forClass(SourceAwareEventWrapper.class);
 
-    ProjectCreatedEvent event = new ProjectCreatedEvent();
-    event.projectName = "Project name";
-    SourceAwareEventWrapper expectedEvent = toSourceAwareEvent(event);
+    ProjectCreatedEvent event = testProjectCreatedEvent("Project name");
 
-    objectUnderTest.receiveAsync("topic", eventConsumer);
-    objectUnderTest.receiveAsync("topic", secondConsumer);
-    objectUnderTest.send("topic", event);
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+    brokerApiUnderTest.receiveAsync("topic", secondConsumer);
+    brokerApiUnderTest.send("topic", event);
 
-    compareWithExpectedEvent(eventConsumer, eventCaptor, expectedEvent);
-    compareWithExpectedEvent(secondConsumer, secondArgCaptor, expectedEvent);
+    compareWithExpectedEvent(eventConsumer, eventCaptor, toSourceAwareEvent(event));
+    compareWithExpectedEvent(secondConsumer, secondArgCaptor, toSourceAwareEvent(event));
   }
 
   @Test
   public void shouldReceiveEventsOnlyFromRegisteredTopic() {
 
-    ProjectCreatedEvent eventForTopic = new ProjectCreatedEvent();
-    eventForTopic.projectName = "Project name";
-    SourceAwareEventWrapper expectedEventForTopic = toSourceAwareEvent(eventForTopic);
+    ProjectCreatedEvent eventForTopic = testProjectCreatedEvent("Project name");
 
-    ProjectCreatedEvent eventForTopic2 = new ProjectCreatedEvent();
-    eventForTopic2.projectName = "Project name 2";
+    ProjectCreatedEvent eventForTopic2 = testProjectCreatedEvent("Project name 2");
 
-    objectUnderTest.receiveAsync("topic", eventConsumer);
-    objectUnderTest.send("topic", eventForTopic);
-    objectUnderTest.send("topic2", eventForTopic2);
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+    brokerApiUnderTest.send("topic", eventForTopic);
+    brokerApiUnderTest.send("topic2", eventForTopic2);
 
-    compareWithExpectedEvent(eventConsumer, eventCaptor, expectedEventForTopic);
+    compareWithExpectedEvent(eventConsumer, eventCaptor, toSourceAwareEvent(eventForTopic));
   }
 
   @Test
   public void shouldNotRegisterTheSameConsumerTwicePerTopic() {
     ProjectCreatedEvent event = new ProjectCreatedEvent();
 
-    SourceAwareEventWrapper expectedEvent = toSourceAwareEvent(event);
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+    brokerApiUnderTest.send("topic", event);
 
-    objectUnderTest.receiveAsync("topic", eventConsumer);
-    objectUnderTest.receiveAsync("topic", eventConsumer);
-    objectUnderTest.send("topic", event);
-
-    compareWithExpectedEvent(eventConsumer, eventCaptor, expectedEvent);
+    compareWithExpectedEvent(eventConsumer, eventCaptor, toSourceAwareEvent(event));
   }
 
-  private static interface Subscriber extends Consumer<SourceAwareEventWrapper> {
+  @Test
+  public void shouldReconnectConsumers() {
+    ArgumentCaptor<SourceAwareEventWrapper> newConsumerArgCaptor =
+        ArgumentCaptor.forClass(SourceAwareEventWrapper.class);
+
+    ProjectCreatedEvent eventForTopic = testProjectCreatedEvent("Project name");
+    SourceAwareEventWrapper expectedEventForTopic = toSourceAwareEvent(eventForTopic);
+
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+    brokerApiUnderTest.send("topic", eventForTopic);
+
+    compareWithExpectedEvent(eventConsumer, eventCaptor, expectedEventForTopic);
+
+    Consumer<SourceAwareEventWrapper> newConsumer = mockEventConsumer();
+    TopicSubscriber consumer =
+        new TopicSubscriber() {
+          @Override
+          public String getTopic() {
+            return "topic";
+          }
+
+          @Override
+          public Consumer<SourceAwareEventWrapper> getConsumer() {
+            return newConsumer;
+          }
+        };
+
+    clearInvocations(eventConsumer);
+
+    brokerApiUnderTest.disconnect();
+    brokerApiUnderTest.connect(Lists.newArrayList(consumer));
+    brokerApiUnderTest.send("topic", eventForTopic);
+
+    compareWithExpectedEvent(newConsumer, newConsumerArgCaptor, expectedEventForTopic);
+    verify(eventConsumer, never()).accept(eventCaptor.capture());
+  }
+
+  @Test
+  public void shouldDisconnectSubscribers() {
+    ProjectCreatedEvent eventForTopic = testProjectCreatedEvent("Project name");
+
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+    brokerApiUnderTest.disconnect();
+
+    brokerApiUnderTest.send("topic", eventForTopic);
+
+    verify(eventConsumer, never()).accept(eventCaptor.capture());
+  }
+
+  @Test
+  public void shouldBeAbleToSwitchBrokerAndReconnectSubscribers() {
+    ArgumentCaptor<SourceAwareEventWrapper> newConsumerArgCaptor =
+        ArgumentCaptor.forClass(SourceAwareEventWrapper.class);
+
+    ProjectCreatedEvent eventForTopic = testProjectCreatedEvent("Project name");
+    TopicSubscriber subscriber = brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+
+    BrokerApi secondaryBroker = new InProcessBrokerApi(instanceId);
+    brokerApiUnderTest.disconnect();
+    secondaryBroker.connect(Arrays.asList(subscriber));
+
+    clearInvocations(eventConsumer);
+
+    brokerApiUnderTest.send("topic", eventForTopic);
+    verify(eventConsumer, never()).accept(eventCaptor.capture());
+
+    clearInvocations(eventConsumer);
+    secondaryBroker.send("topic", eventForTopic);
+
+    compareWithExpectedEvent(
+        eventConsumer, newConsumerArgCaptor, toSourceAwareEvent(eventForTopic));
+  }
+
+  private ProjectCreatedEvent testProjectCreatedEvent(String s) {
+    ProjectCreatedEvent eventForTopic = new ProjectCreatedEvent();
+    eventForTopic.projectName = s;
+    return eventForTopic;
+  }
+
+  private interface Subscriber extends Consumer<SourceAwareEventWrapper> {
 
     @Override
     @Subscribe

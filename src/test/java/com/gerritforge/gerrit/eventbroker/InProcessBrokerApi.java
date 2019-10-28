@@ -20,6 +20,7 @@ import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.server.events.Event;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.util.Collection;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -27,12 +28,30 @@ import org.junit.Ignore;
 
 @Ignore
 public class InProcessBrokerApi implements BrokerApi {
-
-  private final FluentLogger log = FluentLogger.forEnclosingClass();
-
+  private static final FluentLogger log = FluentLogger.forEnclosingClass();
   private UUID instanceId;
   private Gson gson;
   private Map<String, EventBus> eventConsumers;
+
+  static class InProcessTopicSubscriber implements TopicSubscriber {
+    private final Consumer<SourceAwareEventWrapper> consumer;
+    private final String topic;
+
+    InProcessTopicSubscriber(String topic, Consumer<SourceAwareEventWrapper> consumer) {
+      this.topic = topic;
+      this.consumer = consumer;
+    }
+
+    @Override
+    public String getTopic() {
+      return topic;
+    }
+
+    @Override
+    public Consumer<SourceAwareEventWrapper> getConsumer() {
+      return consumer;
+    }
+  }
 
   public InProcessBrokerApi(UUID instanceId) {
     this.instanceId = instanceId;
@@ -57,13 +76,28 @@ public class InProcessBrokerApi implements BrokerApi {
   }
 
   @Override
-  public void receiveAsync(String topic, Consumer<SourceAwareEventWrapper> eventConsumer) {
+  public TopicSubscriber receiveAsync(String topic, Consumer eventConsumer) {
     EventBus topicEventConsumers = eventConsumers.get(topic);
     if (topicEventConsumers == null) {
       topicEventConsumers = new EventBus(topic);
       eventConsumers.put(topic, topicEventConsumers);
     }
+
     topicEventConsumers.register(eventConsumer);
+    return new InProcessTopicSubscriber(topic, eventConsumer);
+  }
+
+  @Override
+  public void connect(Collection<TopicSubscriber> topicSubscribers) {
+    topicSubscribers.forEach(
+        topicSubscriber -> {
+          receiveAsync(topicSubscriber.getTopic(), topicSubscriber.getConsumer());
+        });
+  }
+
+  @Override
+  public void disconnect() {
+    this.eventConsumers.clear();
   }
 
   private JsonObject eventToJson(Event event) {
