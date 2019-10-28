@@ -14,6 +14,9 @@
 
 package com.gerritforge.gerrit.eventbroker;
 
+import static com.gerritforge.gerrit.eventbroker.TopicSubscriber.topicSubscriber;
+
+import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
 import com.google.common.eventbus.EventBus;
 import com.google.common.flogger.FluentLogger;
@@ -21,30 +24,32 @@ import com.google.gerrit.server.events.Event;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
+import org.apache.mina.util.ConcurrentHashSet;
 import org.junit.Ignore;
 
 @Ignore
 public class InProcessBrokerApi implements BrokerApi {
-
-  private final FluentLogger log = FluentLogger.forEnclosingClass();
-
-  private UUID instanceId;
-  private Gson gson;
-  private Map<String, EventBus> eventConsumers;
+  private static final FluentLogger log = FluentLogger.forEnclosingClass();
+  private final UUID instanceId;
+  private final Gson gson;
+  private final Map<String, EventBus> eventBusMap;
+  private final Set<TopicSubscriber> topicSubscribers;
 
   public InProcessBrokerApi(UUID instanceId) {
     this.instanceId = instanceId;
     this.gson = new Gson();
-    this.eventConsumers = new MapMaker().concurrencyLevel(1).makeMap();
+    this.eventBusMap = new MapMaker().concurrencyLevel(1).makeMap();
+    this.topicSubscribers = new ConcurrentHashSet<>();
   }
 
   @Override
   public boolean send(String topic, Event event) {
     SourceAwareEventWrapper sourceAwareEvent = toSourceAwareEvent(event);
 
-    EventBus topicEventConsumers = eventConsumers.get(topic);
+    EventBus topicEventConsumers = eventBusMap.get(topic);
     try {
       if (topicEventConsumers != null) {
         topicEventConsumers.post(sourceAwareEvent);
@@ -58,12 +63,23 @@ public class InProcessBrokerApi implements BrokerApi {
 
   @Override
   public void receiveAsync(String topic, Consumer<SourceAwareEventWrapper> eventConsumer) {
-    EventBus topicEventConsumers = eventConsumers.get(topic);
+    EventBus topicEventConsumers = eventBusMap.get(topic);
     if (topicEventConsumers == null) {
       topicEventConsumers = new EventBus(topic);
-      eventConsumers.put(topic, topicEventConsumers);
+      eventBusMap.put(topic, topicEventConsumers);
     }
     topicEventConsumers.register(eventConsumer);
+    topicSubscribers.add(topicSubscriber(topic, eventConsumer));
+  }
+
+  @Override
+  public Set<TopicSubscriber> topicSubscribers() {
+    return ImmutableSet.copyOf(topicSubscribers);
+  }
+
+  @Override
+  public void disconnect() {
+    this.eventBusMap.clear();
   }
 
   private JsonObject eventToJson(Event event) {
