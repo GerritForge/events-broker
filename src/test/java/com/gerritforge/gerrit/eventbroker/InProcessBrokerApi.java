@@ -20,9 +20,9 @@ import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.server.events.Event;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Consumer;
 import org.junit.Ignore;
 
 @Ignore
@@ -57,13 +57,24 @@ public class InProcessBrokerApi implements BrokerApi {
   }
 
   @Override
-  public void receiveAsync(String topic, Consumer<SourceAwareEventWrapper> eventConsumer) {
+  public void receiveAsync(String topic, java.util.function.Consumer eventConsumer) {
     EventBus topicEventConsumers = eventConsumers.get(topic);
     if (topicEventConsumers == null) {
       topicEventConsumers = new EventBus(topic);
       eventConsumers.put(topic, topicEventConsumers);
     }
+
     topicEventConsumers.register(eventConsumer);
+  }
+
+  @Override
+  public void reconnect(List<EventConsumer> eventConsumers) {
+    this.eventConsumers.clear();
+
+    eventConsumers.forEach(
+        eventConsumer -> {
+          receiveAsync(eventConsumer.getTopic(), eventConsumer.getConsumer());
+        });
   }
 
   private JsonObject eventToJson(Event event) {

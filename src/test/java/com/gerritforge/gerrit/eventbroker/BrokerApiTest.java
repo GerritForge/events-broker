@@ -15,9 +15,12 @@
 package com.gerritforge.gerrit.eventbroker;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.clearInvocations;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
+import com.google.common.collect.Lists;
 import com.google.common.eventbus.Subscribe;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
@@ -130,6 +133,43 @@ public class BrokerApiTest {
     objectUnderTest.send("topic", event);
 
     compareWithExpectedEvent(eventConsumer, eventCaptor, expectedEvent);
+  }
+
+  @Test
+  public void shouldReconnectConsumers() {
+    ArgumentCaptor<SourceAwareEventWrapper> newConsumerArgCaptor =
+        ArgumentCaptor.forClass(SourceAwareEventWrapper.class);
+
+    ProjectCreatedEvent eventForTopic = new ProjectCreatedEvent();
+    eventForTopic.projectName = "Project name";
+    SourceAwareEventWrapper expectedEventForTopic = toSourceAwareEvent(eventForTopic);
+
+    objectUnderTest.receiveAsync("topic", eventConsumer);
+    objectUnderTest.send("topic", eventForTopic);
+
+    compareWithExpectedEvent(eventConsumer, eventCaptor, expectedEventForTopic);
+
+    Consumer<SourceAwareEventWrapper> newConsumer = mockEventConsumer();
+    EventConsumer consumer =
+        new EventConsumer() {
+          @Override
+          public String getTopic() {
+            return "topic";
+          }
+
+          @Override
+          public Consumer<SourceAwareEventWrapper> getConsumer() {
+            return newConsumer;
+          }
+        };
+
+    clearInvocations(eventConsumer);
+
+    objectUnderTest.reconnect(Lists.newArrayList(consumer));
+    objectUnderTest.send("topic", eventForTopic);
+
+    compareWithExpectedEvent(newConsumer, newConsumerArgCaptor, expectedEventForTopic);
+    verify(eventConsumer, never()).accept(eventCaptor.capture());
   }
 
   private static interface Subscriber extends Consumer<SourceAwareEventWrapper> {

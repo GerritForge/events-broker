@@ -15,6 +15,7 @@
 package com.gerritforge.gerrit.eventbroker;
 
 import com.google.gerrit.server.events.Event;
+import java.util.List;
 import java.util.function.Consumer;
 
 /** API for sending/receiving events through a message Broker. */
@@ -33,7 +34,14 @@ public interface BrokerApi {
    * Receive asynchronously events from a topic.
    *
    * @param topic topic name
-   * @param eventConsumer an operation that accepts and process a single event
+   * @param consumer an operation that accepts and process a single event
    */
-  void receiveAsync(String topic, Consumer<SourceAwareEventWrapper> eventConsumer);
+  void receiveAsync(String topic, Consumer<SourceAwareEventWrapper> consumer);
+
+  /**
+   * Shutdown all existing customers and subscribe new one.
+   *
+   * @param eventConsumers list of new consumers to subscribe
+   */
+  void reconnect(List<EventConsumer> eventConsumers);
 }
