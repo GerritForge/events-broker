@@ -14,6 +14,7 @@
 
 package com.gerritforge.gerrit.eventbroker;
 
+import com.google.common.collect.Multimap;
 import com.google.gerrit.server.events.Event;
 import java.util.function.Consumer;
 
@@ -33,7 +34,17 @@ public interface BrokerApi {
    * Receive asynchronously events from a topic.
    *
    * @param topic topic name
-   * @param eventConsumer an operation that accepts and process a single event
+   * @param consumer an operation that accepts and process a single event
    */
-  void receiveAsync(String topic, Consumer<SourceAwareEventWrapper> eventConsumer);
+  void receiveAsync(String topic, Consumer<SourceAwareEventWrapper> consumer);
+
+  /**
+   * Get the list of active consumers
+   *
+   * @return multi-map of the topics and associated active consumers
+   */
+  Multimap<String, Consumer<SourceAwareEventWrapper>> consumersMap();
+
+  /** Disconnect from broker and cancel all active consumers */
+  void disconnect();
 }
