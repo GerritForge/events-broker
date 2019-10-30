@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e3ffc7fe_f8840a79",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/BrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-10-30T23:46:05Z",
+      "side": 1,
+      "message": "There is a bigger picture. I was going the same path as you but then I realised that it\u0027s not that simple because in multi-site we are also running thread per subscriber, so we need to reconnect and start new threads as well. This is already implemented in two top changes for kafka-broker and multi-site:\nhttps://gerrit-review.googlesource.com/c/plugins/multi-site/+/242836/1\nhttps://gerrit-review.googlesource.com/c/plugins/kafka-events/+/242834/1\n\nMaybe have a brief look on them to have full picture",
+      "parentUuid": "68c2409a_292a6d45",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "662b45bea6bf135ac38974b415657e45d838a8eb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08740838_c5c784f5",
         "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/BrokerApi.java",
         "patchSetId": 3
