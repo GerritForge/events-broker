@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "00fe4419_55deada0",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/EventConsumer.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-10-30T21:20:16Z",
+      "side": 1,
+      "message": "I thought that EventConsumer is more generic because TopicSubscriber suggesting the source of the event but it\u0027s fine for me",
+      "parentUuid": "95f8f055_d9e563d1",
+      "range": {
+        "startLine": 6,
+        "startChar": 17,
+        "endLine": 6,
+        "endChar": 30
+      },
+      "revId": "60c77337316db286914c0a5e4cb0d309fcc5cb23",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d4575037_2875766f",
         "filename": "src/test/java/com/gerritforge/gerrit/eventbroker/BrokerApiTest.java",
         "patchSetId": 1
