@@ -22,6 +22,53 @@
       "revId": "662b45bea6bf135ac38974b415657e45d838a8eb",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68c2409a_292a6d45",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/BrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-30T22:21:45Z",
+      "side": 1,
+      "message": "I was actually thinking if we do really need, or not, the concept of a subscriber.",
+      "parentUuid": "36e71bcd_077cb8f8",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "662b45bea6bf135ac38974b415657e45d838a8eb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08740838_c5c784f5",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/BrokerApi.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-10-30T22:21:45Z",
+      "side": 1,
+      "message": "We already have the receiveAsync() that is doing the same thing: do we really need this utility method?",
+      "range": {
+        "startLine": 47,
+        "startChar": 7,
+        "endLine": 47,
+        "endChar": 60
+      },
+      "revId": "662b45bea6bf135ac38974b415657e45d838a8eb",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
