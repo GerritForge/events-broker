@@ -17,8 +17,6 @@ package com.gerritforge.gerrit.eventbroker;
 import static java.util.Objects.requireNonNull;
 
 import com.google.gerrit.server.events.Event;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import java.util.UUID;
 
 /**
@@ -29,29 +27,19 @@ import java.util.UUID;
 public class SourceAwareEventWrapper {
 
   private final EventHeader header;
-  private final JsonObject body;
+  private final Event event;
 
   public EventHeader getHeader() {
     return header;
   }
 
   /**
-   * Returns Json representation of an underlaying {@code Event} object.
+   * Returns deserialized {@code Event} object
    *
-   * @return {@code Event} json representation
-   */
-  public JsonObject getBody() {
-    return body;
-  }
-
-  /**
-   * Returns deserialized {@code Event} object from the Json representation
-   *
-   * @param gson Json serializer/deserializer
    * @return {@code Event} class instance
    */
-  public Event getEventBody(Gson gson) {
-    return gson.fromJson(this.body, Event.class);
+  public Event getEvent() {
+    return event;
   }
 
   /** Contains all additional information required to successfully send an {@code Event} object. */
@@ -133,17 +121,22 @@ public class SourceAwareEventWrapper {
    *
    * @param header message header object, contains all additional information required to properly
    *     send the message
-   * @param body Json representation of an {@link Event} object
+   * @param event {@link Event} object
    */
-  public SourceAwareEventWrapper(EventHeader header, JsonObject body) {
+  public SourceAwareEventWrapper(EventHeader header, Event event) {
     this.header = header;
-    this.body = body;
+    this.event = event;
   }
 
   /** Validate if all required fields are not null. */
   public void validate() {
     requireNonNull(header, "Header cannot be null");
-    requireNonNull(body, "Body cannot be null");
+    requireNonNull(event, "Event cannot be null");
     header.validate();
+  }
+
+  @Override
+  public String toString() {
+    return String.format("Header='%s', Event='%s'", header, event);
   }
 }
