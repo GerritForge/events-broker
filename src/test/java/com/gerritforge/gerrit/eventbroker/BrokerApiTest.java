@@ -227,7 +227,7 @@ public class BrokerApiTest {
     verify(eventConsumer, times(1)).accept(eventCaptor.capture());
     assertThat(eventCaptor.getValue().getHeader().toString())
         .isEqualTo(expectedEvent.getHeader().toString());
-    assertThat(eventCaptor.getValue().getBody()).isEqualTo(expectedEvent.getBody());
+    assertThat(eventCaptor.getValue().getEvent()).isEqualTo(expectedEvent.getEvent());
   }
 
   private JsonObject eventToJson(Event event) {
@@ -235,10 +235,9 @@ public class BrokerApiTest {
   }
 
   protected SourceAwareEventWrapper toSourceAwareEvent(Event event) {
-    JsonObject body = eventToJson(event);
     return new SourceAwareEventWrapper(
         new SourceAwareEventWrapper.EventHeader(
             instanceId, event.getType(), instanceId, event.eventCreatedOn),
-        body);
+        event);
   }
 }
