@@ -24,12 +24,12 @@ import java.util.UUID;
  * including the Gerrit server instance id. Additionally this class contains an event-id, event-type
  * and event-created-on fields.
  */
-public class SourceAwareEventWrapper {
+public class EventMessage {
 
-  private final EventHeader header;
+  private final Header header;
   private final Event body;
 
-  public EventHeader getHeader() {
+  public Header getHeader() {
     return header;
   }
 
@@ -43,78 +43,27 @@ public class SourceAwareEventWrapper {
   }
 
   /** Contains all additional information required to successfully send an {@code Event} object. */
-  public static class EventHeader {
+  public static class Header {
+    /** Unique event id. */
+    public final UUID eventId;
 
-    private final UUID eventId;
-    private final String eventType;
-    private final UUID sourceInstanceId;
-    private final Long eventCreatedOn;
+    /** Gerrit server instance id from which event was sent. */
+    public final UUID sourceInstanceId;
 
-    public EventHeader(UUID eventId, String eventType, UUID sourceInstanceId, Long eventCreatedOn) {
+    public Header(UUID eventId, UUID sourceInstanceId) {
       this.eventId = eventId;
-      this.eventType = eventType;
       this.sourceInstanceId = sourceInstanceId;
-      this.eventCreatedOn = eventCreatedOn;
-    }
-
-    /**
-     * Unique event id.
-     *
-     * @return uuid
-     */
-    public UUID getEventId() {
-      return eventId;
-    }
-
-    /**
-     * Type of an underlaying {@code Event} object.
-     *
-     * @return eventType
-     */
-    public String getEventType() {
-      return eventType;
-    }
-
-    /**
-     * Gerrit server instance id from which event was sent.
-     *
-     * @return uuid
-     */
-    public UUID getSourceInstanceId() {
-      return sourceInstanceId;
-    }
-
-    /**
-     * Underlying event creation time in seconds.
-     *
-     * @return eventCreatedOn
-     */
-    public Long getEventCreatedOn() {
-      return eventCreatedOn;
     }
 
     /** Validate if all required header fields are not null. */
     public void validate() {
       requireNonNull(eventId, "EventId cannot be null");
-      requireNonNull(eventType, "EventType cannot be null");
       requireNonNull(sourceInstanceId, "Source Instance ID cannot be null");
     }
 
     @Override
     public String toString() {
-      return "{"
-          + "eventId="
-          + eventId
-          + ", eventType='"
-          + eventType
-          + '\''
-          + ", sourceInstanceId="
-          + sourceInstanceId
-          + ", eventCreatedOn="
-          + eventCreatedOn
-          + ", event="
-          + eventCreatedOn
-          + '}';
+      return "{" + "eventId=" + eventId + ", sourceInstanceId=" + sourceInstanceId + '}';
     }
   }
 
@@ -125,7 +74,7 @@ public class SourceAwareEventWrapper {
    *     send the message
    * @param event {@link Event} object
    */
-  public SourceAwareEventWrapper(EventHeader header, Event event) {
+  public EventMessage(Header header, Event event) {
     this.header = header;
     this.body = event;
   }
@@ -139,6 +88,6 @@ public class SourceAwareEventWrapper {
 
   @Override
   public String toString() {
-    return String.format("Header='%s', Event='%s'", header, body);
+    return String.format("Header='%s', Body='%s'", header, body);
   }
 }

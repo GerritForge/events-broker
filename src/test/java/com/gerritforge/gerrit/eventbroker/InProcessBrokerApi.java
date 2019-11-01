@@ -20,9 +20,7 @@ import com.google.common.collect.MapMaker;
 import com.google.common.collect.Multimap;
 import com.google.common.eventbus.EventBus;
 import com.google.common.flogger.FluentLogger;
-import com.google.gerrit.server.events.Event;
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.Consumer;
@@ -34,7 +32,7 @@ public class InProcessBrokerApi implements BrokerApi {
   private final UUID instanceId;
   private final Gson gson;
   private final Map<String, EventBus> eventBusMap;
-  private final Multimap<String, Consumer<SourceAwareEventWrapper>> eventConsumers;
+  private final Multimap<String, Consumer<EventMessage>> eventConsumers;
 
   public InProcessBrokerApi(UUID instanceId) {
     this.instanceId = instanceId;
@@ -44,13 +42,11 @@ public class InProcessBrokerApi implements BrokerApi {
   }
 
   @Override
-  public boolean send(String topic, Event event) {
-    SourceAwareEventWrapper sourceAwareEvent = toSourceAwareEvent(event);
-
+  public boolean send(String topic, EventMessage message) {
     EventBus topicEventConsumers = eventBusMap.get(topic);
     try {
       if (topicEventConsumers != null) {
-        topicEventConsumers.post(sourceAwareEvent);
+        topicEventConsumers.post(message);
       }
     } catch (RuntimeException e) {
       log.atSevere().withCause(e).log();
@@ -60,7 +56,7 @@ public class InProcessBrokerApi implements BrokerApi {
   }
 
   @Override
-  public void receiveAsync(String topic, Consumer<SourceAwareEventWrapper> eventConsumer) {
+  public void receiveAsync(String topic, Consumer<EventMessage> eventConsumer) {
     EventBus topicEventConsumers = eventBusMap.get(topic);
     if (topicEventConsumers == null) {
       topicEventConsumers = new EventBus(topic);
@@ -71,23 +67,12 @@ public class InProcessBrokerApi implements BrokerApi {
   }
 
   @Override
-  public Multimap<String, Consumer<SourceAwareEventWrapper>> consumersMap() {
+  public Multimap<String, Consumer<EventMessage>> consumersMap() {
     return ImmutableMultimap.copyOf(eventConsumers);
   }
 
   @Override
   public void disconnect() {
     this.eventBusMap.clear();
-  }
-
-  private JsonObject eventToJson(Event event) {
-    return gson.toJsonTree(event).getAsJsonObject();
-  }
-
-  protected SourceAwareEventWrapper toSourceAwareEvent(Event event) {
-    return new SourceAwareEventWrapper(
-        new SourceAwareEventWrapper.EventHeader(
-            instanceId, event.getType(), instanceId, event.eventCreatedOn),
-        event);
   }
 }

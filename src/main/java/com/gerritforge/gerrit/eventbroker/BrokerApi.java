@@ -14,36 +14,49 @@
 
 package com.gerritforge.gerrit.eventbroker;
 
+import com.gerritforge.gerrit.eventbroker.EventMessage.Header;
 import com.google.common.collect.Multimap;
 import com.google.gerrit.server.events.Event;
+import java.util.UUID;
 import java.util.function.Consumer;
 
 /** API for sending/receiving events through a message Broker. */
 public interface BrokerApi {
 
   /**
-   * Send an event to a topic.
+   * Creates a {@link EventMessage} for an event
    *
-   * @param topic topic name
-   * @param event to be send to the topic
-   * @return true if the event was successfully sent. False otherwise.
+   * @param event
+   * @return {@link EventMessage} object
    */
-  boolean send(String topic, Event event);
+  default EventMessage newMessage(UUID instanceId, Event event) {
+
+    return new EventMessage(new Header(UUID.randomUUID(), instanceId), event);
+  }
 
   /**
-   * Receive asynchronously events from a topic.
+   * Send an message to a topic.
    *
    * @param topic topic name
-   * @param consumer an operation that accepts and process a single event
+   * @param message to be send to the topic
+   * @return true if the message was successfully sent. False otherwise.
    */
-  void receiveAsync(String topic, Consumer<SourceAwareEventWrapper> consumer);
+  boolean send(String topic, EventMessage message);
+
+  /**
+   * Receive asynchronously a message from a topic.
+   *
+   * @param topic topic name
+   * @param consumer an operation that accepts and process a single message
+   */
+  void receiveAsync(String topic, Consumer<EventMessage> consumer);
 
   /**
    * Get the list of active consumers
    *
    * @return multi-map of the topics and associated active consumers
    */
-  Multimap<String, Consumer<SourceAwareEventWrapper>> consumersMap();
+  Multimap<String, Consumer<EventMessage>> consumersMap();
 
   /** Disconnect from broker and cancel all active consumers */
   void disconnect();
