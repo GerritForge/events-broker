@@ -19,11 +19,11 @@ import java.util.function.Consumer;
 
 @AutoValue
 public abstract class TopicSubscriber {
-  static TopicSubscriber topicSubscriber(String topic, Consumer<SourceAwareEventWrapper> consumer) {
+  static TopicSubscriber topicSubscriber(String topic, Consumer<EventMessage> consumer) {
     return new AutoValue_TopicSubscriber(topic, consumer);
   }
 
   abstract String topic();
 
-  abstract Consumer<SourceAwareEventWrapper> consumer();
+  abstract Consumer<EventMessage> consumer();
 }
