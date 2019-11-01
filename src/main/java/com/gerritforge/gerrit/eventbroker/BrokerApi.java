@@ -41,7 +41,7 @@ public interface BrokerApi {
   /**
    * Get the active subscribers
    *
-   * @return @{@link Set} of the topics subscribers
+   * @return {@link Set} of the topics subscribers
    */
   Set<TopicSubscriber> topicSubscribers();
 

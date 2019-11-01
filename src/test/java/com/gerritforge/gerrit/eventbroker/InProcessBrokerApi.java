@@ -87,10 +87,9 @@ public class InProcessBrokerApi implements BrokerApi {
   }
 
   protected SourceAwareEventWrapper toSourceAwareEvent(Event event) {
-    JsonObject body = eventToJson(event);
     return new SourceAwareEventWrapper(
         new SourceAwareEventWrapper.EventHeader(
             instanceId, event.getType(), instanceId, event.eventCreatedOn),
-        body);
+        event);
   }
 }
