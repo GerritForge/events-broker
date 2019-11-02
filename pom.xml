@@ -4,7 +4,7 @@
 
     <groupId>com.gerritforge</groupId>
     <artifactId>events-broker</artifactId>
-    <version>3.1-SNAPSHOT</version>
+    <version>3.1.0-rc2</version>
     <packaging>jar</packaging>
 
     <name>events-broker</name>
@@ -38,7 +38,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <gerrit.version>3.0.2</gerrit.version>
+        <gerrit.version>${project.version}</gerrit.version>
+        <auto-value.version>1.7</auto-value.version>
     </properties>
 
     <dependencies>
@@ -147,6 +148,18 @@
                         <phase>process-sources</phase>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <annotationProcessorPaths>
+                        <path>
+                            <groupId>com.google.auto.value</groupId>
+                            <artifactId>auto-value</artifactId>
+                            <version>${auto-value.version}</version>
+                        </path>
+                    </annotationProcessorPaths>
+                </configuration>
             </plugin>
         </plugins>
     </build>
