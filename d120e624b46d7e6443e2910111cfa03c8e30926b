@@ -1,0 +1,8 @@
+Formatting+1: Jenkins at Gerrit-CI <jenkins@gerritforge.com>
+Verified+1: Jenkins at Gerrit-CI <jenkins@gerritforge.com>
+Code-Review+2: David Ostrovsky <david.ostrovsky@gmail.com>
+Submitted-by: Luca Milanesio <luca.milanesio@gmail.com>
+Submitted-at: Sun, 03 Nov 2019 21:51:22 +0000
+Reviewed-on: https://review.gerrithub.io/c/GerritForge/events-broker/+/473095
+Project: GerritForge/events-broker
+Branch: refs/heads/stable-3.0
