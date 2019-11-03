@@ -1,6 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@rules_java//java:defs.bzl", "java_library")
+load("//tools/bzl:javadoc.bzl", "java_doc")
 load("//tools/bzl:junit.bzl", "junit_tests")
 load(
     "//tools/bzl:plugin.bzl",
@@ -13,6 +14,13 @@ java_library(
     name = "events-broker",
     srcs = glob(["src/main/java/**/*.java"]),
     deps = PLUGIN_DEPS_NEVERLINK,
+)
+
+java_doc(
+    name = "events-broker-javadoc",
+    libs = [":events-broker"],
+    pkgs = ["com.gerritforge.gerrit.eventbroker"],
+    title = "Event Broker API Documentation",
 )
 
 junit_tests(
