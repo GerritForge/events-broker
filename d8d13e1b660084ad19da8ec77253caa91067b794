@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e3e7c97_07fcc7a3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-11-05T23:08:54Z",
+      "side": 1,
+      "message": "Can this be a symlink instead of a copy operation?",
+      "revId": "d8d13e1b660084ad19da8ec77253caa91067b794",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82a689c7_4ef13231",
+        "filename": "tools/maven/mvn.sh",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-11-05T23:08:54Z",
+      "side": 1,
+      "message": "This is now a Python script in Gerrit, can that be reused instead of copy\u0026pasted?",
+      "revId": "d8d13e1b660084ad19da8ec77253caa91067b794",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb99284f_fafe4718",
+        "filename": "version.bzl",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2019-11-05T23:08:54Z",
+      "side": 1,
+      "message": "Can this be obtained from a `git describe` command?",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 30
+      },
+      "revId": "d8d13e1b660084ad19da8ec77253caa91067b794",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
