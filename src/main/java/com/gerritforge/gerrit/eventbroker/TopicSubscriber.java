@@ -19,7 +19,7 @@ import java.util.function.Consumer;
 
 @AutoValue
 public abstract class TopicSubscriber {
-  static TopicSubscriber topicSubscriber(String topic, Consumer<EventMessage> consumer) {
+  public static TopicSubscriber topicSubscriber(String topic, Consumer<EventMessage> consumer) {
     return new AutoValue_TopicSubscriber(topic, consumer);
   }
 
