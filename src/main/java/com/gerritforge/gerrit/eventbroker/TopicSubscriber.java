@@ -23,7 +23,7 @@ public abstract class TopicSubscriber {
     return new AutoValue_TopicSubscriber(topic, consumer);
   }
 
-  abstract String topic();
+  public abstract String topic();
 
-  abstract Consumer<EventMessage> consumer();
+  public abstract Consumer<EventMessage> consumer();
 }
