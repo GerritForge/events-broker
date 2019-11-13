@@ -26,11 +26,8 @@ import com.google.gerrit.server.events.SupplierDeserializer;
 import com.google.gerrit.server.events.SupplierSerializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
-import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import com.google.inject.Provider;
@@ -50,24 +47,6 @@ public class EventGsonProvider implements Provider<Gson> {
       }
 
       return context.serialize(src, cls);
-    }
-  }
-
-  public class ProjectNameKeyDeserializer implements JsonDeserializer<Project.NameKey> {
-
-    @Override
-    public Project.NameKey deserialize(
-        JsonElement json, Type type, JsonDeserializationContext context) throws JsonParseException {
-      if (!json.isJsonPrimitive()) {
-        throw new JsonParseException("Not a primitive type");
-      }
-
-      JsonPrimitive jsonPrimitive = (JsonPrimitive) json;
-      if (!jsonPrimitive.isString()) {
-        throw new JsonParseException("Not a string");
-      }
-
-      return Project.nameKey(jsonPrimitive.getAsString());
     }
   }
 

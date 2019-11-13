@@ -21,11 +21,11 @@ import com.google.common.collect.MapMaker;
 import com.google.common.eventbus.EventBus;
 import com.google.common.flogger.FluentLogger;
 import com.google.gson.Gson;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 import java.util.function.Consumer;
-import org.apache.mina.util.ConcurrentHashSet;
 import org.junit.Ignore;
 
 @Ignore
@@ -40,7 +40,7 @@ public class InProcessBrokerApi implements BrokerApi {
     this.instanceId = instanceId;
     this.gson = new Gson();
     this.eventBusMap = new MapMaker().concurrencyLevel(1).makeMap();
-    this.topicSubscribers = new ConcurrentHashSet<>();
+    this.topicSubscribers = new HashSet<>();
   }
 
   @Override
