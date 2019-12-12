@@ -50,7 +50,7 @@ public class BrokerApiTest {
 
   @Before
   public void setup() {
-    brokerApiUnderTest = new InProcessBrokerApi(instanceId);
+    brokerApiUnderTest = new InProcessBrokerApi();
     eventConsumer = mockEventConsumer();
   }
 
@@ -188,7 +188,7 @@ public class BrokerApiTest {
 
     ProjectCreatedEvent eventForTopic = testProjectCreatedEvent("Project name");
 
-    BrokerApi secondaryBroker = new InProcessBrokerApi(instanceId);
+    BrokerApi secondaryBroker = new InProcessBrokerApi();
     brokerApiUnderTest.disconnect();
     secondaryBroker.receiveAsync("topic", eventConsumer);
 
