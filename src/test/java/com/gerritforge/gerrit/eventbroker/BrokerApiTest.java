@@ -50,7 +50,7 @@ public class BrokerApiTest {
 
   @Before
   public void setup() {
-    brokerApiUnderTest = new InProcessBrokerApi(instanceId);
+    brokerApiUnderTest = new InProcessBrokerApi();
     eventConsumer = mockEventConsumer();
   }
 
@@ -188,7 +188,7 @@ public class BrokerApiTest {
 
     ProjectCreatedEvent eventForTopic = testProjectCreatedEvent("Project name");
 
-    BrokerApi secondaryBroker = new InProcessBrokerApi(instanceId);
+    BrokerApi secondaryBroker = new InProcessBrokerApi();
     brokerApiUnderTest.disconnect();
     secondaryBroker.receiveAsync("topic", eventConsumer);
 
@@ -218,6 +218,12 @@ public class BrokerApiTest {
     brokerApiUnderTest.replayAllEvents("topic");
     verify(eventConsumer, times(1)).accept(eventCaptor.capture());
     compareWithExpectedEvent(eventConsumer, eventCaptor, event);
+  }
+
+  @Test
+  public void shouldSkipReplayAllEventsWhenTopicDoesNotExists() {
+    brokerApiUnderTest.replayAllEvents("topic2");
+    verify(eventConsumer, times(0)).accept(eventCaptor.capture());
   }
 
   private ProjectCreatedEvent testProjectCreatedEvent(String s) {
