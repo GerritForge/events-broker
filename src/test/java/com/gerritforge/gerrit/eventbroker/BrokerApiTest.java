@@ -18,6 +18,7 @@ import static com.gerritforge.gerrit.eventbroker.TopicSubscriber.topicSubscriber
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.clearInvocations;
 import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
@@ -200,6 +201,23 @@ public class BrokerApiTest {
     secondaryBroker.send("topic", wrap(eventForTopic));
 
     compareWithExpectedEvent(eventConsumer, newConsumerArgCaptor, eventForTopic);
+  }
+
+  @Test
+  public void shouldReplayAllEvents() {
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+
+    assertThat(brokerApiUnderTest.send("topic", wrap(event))).isTrue();
+
+    verify(eventConsumer, times(1)).accept(eventCaptor.capture());
+    compareWithExpectedEvent(eventConsumer, eventCaptor, event);
+    reset(eventConsumer);
+
+    brokerApiUnderTest.replayAllEvents("topic");
+    verify(eventConsumer, times(1)).accept(eventCaptor.capture());
+    compareWithExpectedEvent(eventConsumer, eventCaptor, event);
   }
 
   private ProjectCreatedEvent testProjectCreatedEvent(String s) {
