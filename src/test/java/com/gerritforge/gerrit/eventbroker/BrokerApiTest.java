@@ -202,6 +202,21 @@ public class BrokerApiTest {
     compareWithExpectedEvent(eventConsumer, newConsumerArgCaptor, eventForTopic);
   }
 
+  @Test
+  public void shouldReplayAllEvents() {
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+
+    brokerApiUnderTest.receiveAsync("topic", eventConsumer);
+
+    assertThat(brokerApiUnderTest.send("topic", wrap(event))).isTrue();
+
+    brokerApiUnderTest.replayAllEvents("topic");
+
+    verify(eventConsumer, times(2)).accept(eventCaptor.capture());
+
+    eventCaptor.getAllValues().forEach(e -> assertThat(e.getEvent()).isEqualTo(event));
+  }
+
   private ProjectCreatedEvent testProjectCreatedEvent(String s) {
     ProjectCreatedEvent eventForTopic = new ProjectCreatedEvent();
     eventForTopic.projectName = s;
