@@ -60,4 +60,10 @@ public interface BrokerApi {
 
   /** Disconnect from broker and cancel all active consumers */
   void disconnect();
+
+  /** Redeliver all stored messages for specified topic
+   *
+   * @param topic topic name
+   */
+  void replayAllEvents(String topic);
 }
