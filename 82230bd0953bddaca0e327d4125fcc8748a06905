@@ -22,6 +22,30 @@
       "revId": "82230bd0953bddaca0e327d4125fcc8748a06905",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acbfa195_37d64c49",
+        "filename": "src/test/java/com/gerritforge/gerrit/eventbroker/BrokerApiTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2019-12-19T14:54:01Z",
+      "side": 1,
+      "message": "This is checking if message was delivered via send and later delivered via replay. I agree it\u0027s not obvious let me change the code a bit to make it clear",
+      "parentUuid": "07e4ebcb_b43a2527",
+      "range": {
+        "startLine": 215,
+        "startChar": 26,
+        "endLine": 215,
+        "endChar": 31
+      },
+      "revId": "82230bd0953bddaca0e327d4125fcc8748a06905",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
