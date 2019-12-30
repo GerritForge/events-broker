@@ -16,9 +16,11 @@ package com.gerritforge.gerrit.eventbroker;
 
 import static com.gerritforge.gerrit.eventbroker.TopicSubscriber.topicSubscriber;
 
+import com.google.common.collect.EvictingQueue;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.MapMaker;
 import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
 import com.google.common.flogger.FluentLogger;
 import com.google.gson.Gson;
 import java.util.HashSet;
@@ -33,6 +35,7 @@ public class InProcessBrokerApi implements BrokerApi {
   private static final FluentLogger log = FluentLogger.forEnclosingClass();
   private final UUID instanceId;
   private final Gson gson;
+  private final Map<String, EvictingQueue<EventMessage>> messagesQueueMap;
   private final Map<String, EventBus> eventBusMap;
   private final Set<TopicSubscriber> topicSubscribers;
 
@@ -40,6 +43,7 @@ public class InProcessBrokerApi implements BrokerApi {
     this.instanceId = instanceId;
     this.gson = new Gson();
     this.eventBusMap = new MapMaker().concurrencyLevel(1).makeMap();
+    this.messagesQueueMap = new MapMaker().concurrencyLevel(1).makeMap();
     this.topicSubscribers = new HashSet<>();
   }
 
@@ -64,8 +68,13 @@ public class InProcessBrokerApi implements BrokerApi {
       topicEventConsumers = new EventBus(topic);
       eventBusMap.put(topic, topicEventConsumers);
     }
+
     topicEventConsumers.register(eventConsumer);
     topicSubscribers.add(topicSubscriber(topic, eventConsumer));
+
+    EvictingQueue<EventMessage> messageQueue = EvictingQueue.create(10);
+    messagesQueueMap.put(topic, messageQueue);
+    topicEventConsumers.register(new EventBusMessageRecorder(messageQueue));
   }
 
   @Override
@@ -76,5 +85,25 @@ public class InProcessBrokerApi implements BrokerApi {
   @Override
   public void disconnect() {
     this.eventBusMap.clear();
+  }
+
+  @Override
+  public void replayAllEvents(String topic) {
+    messagesQueueMap.get(topic).stream().forEach(eventMessage -> send(topic, eventMessage));
+  }
+
+  private class EventBusMessageRecorder {
+    private EvictingQueue messagesQueue;
+
+    public EventBusMessageRecorder(EvictingQueue messagesQueue) {
+      this.messagesQueue = messagesQueue;
+    }
+
+    @Subscribe
+    public void recordCustomerChange(EventMessage e) {
+      if (!messagesQueue.contains(e)) {
+        messagesQueue.add(e);
+      }
+    }
   }
 }
