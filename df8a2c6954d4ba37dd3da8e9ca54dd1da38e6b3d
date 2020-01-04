@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7e05b782_f96baedd",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/LibModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2020-01-04T16:53:48Z",
+      "side": 1,
+      "message": "Binding NoOp implementation here was the only way I\u0027ve manage to make it working in multi-site when there is no real implementation provided. On multi-site I\u0027ve added some comments what I was trying to do to avoid binding NoOp here.",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 74
+      },
+      "revId": "df8a2c6954d4ba37dd3da8e9ca54dd1da38e6b3d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
