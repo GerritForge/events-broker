@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c144d7a6_1e479337",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/InProcessBrokerApi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2020-01-07T11:04:38Z",
+      "side": 1,
+      "message": "This code is moved from test. In test we had 10 which was enough but here we should bump it a little bit",
+      "parentUuid": "bcc2fb8f_f923be34",
+      "range": {
+        "startLine": 67,
+        "startChar": 68,
+        "endLine": 67,
+        "endChar": 71
+      },
+      "revId": "67a52e46c407ab2e4bd9681c9057654a0f070637",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29c2aa8c_9cbfa36c",
         "filename": "src/test/java/com/gerritforge/gerrit/eventbroker/BrokerApiTest.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "67a52e46c407ab2e4bd9681c9057654a0f070637",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4079533f_8ea77291",
+        "filename": "src/test/java/com/gerritforge/gerrit/eventbroker/BrokerApiTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2020-01-07T11:04:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29c2aa8c_9cbfa36c",
+      "range": {
+        "startLine": 225,
+        "startChar": 40,
+        "endLine": 225,
+        "endChar": 46
+      },
+      "revId": "67a52e46c407ab2e4bd9681c9057654a0f070637",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
