@@ -46,6 +46,30 @@
       "revId": "d0a76a9f46cb1f00e1504d8ce2d7cafbc4d4f22b",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbb16f2_aa9b2a47",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/InProcessBrokerApi.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2020-01-07T11:13:37Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "e22c0727_4141c43f",
+      "range": {
+        "startLine": 42,
+        "startChar": 33,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "d0a76a9f46cb1f00e1504d8ce2d7cafbc4d4f22b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": false
     }
   ]
 }
