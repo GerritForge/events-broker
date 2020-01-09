@@ -22,26 +22,21 @@ import com.google.common.collect.MapMaker;
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 import com.google.common.flogger.FluentLogger;
-import com.google.gson.Gson;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.UUID;
 import java.util.function.Consumer;
-import org.junit.Ignore;
 
-@Ignore
 public class InProcessBrokerApi implements BrokerApi {
   private static final FluentLogger log = FluentLogger.forEnclosingClass();
-  private final UUID instanceId;
-  private final Gson gson;
+
+  private static final Integer DEFAULT_MESSAGE_QUEUE_SIZE = 100;
+
   private final Map<String, EvictingQueue<EventMessage>> messagesQueueMap;
   private final Map<String, EventBus> eventBusMap;
   private final Set<TopicSubscriber> topicSubscribers;
 
-  public InProcessBrokerApi(UUID instanceId) {
-    this.instanceId = instanceId;
-    this.gson = new Gson();
+  public InProcessBrokerApi() {
     this.eventBusMap = new MapMaker().concurrencyLevel(1).makeMap();
     this.messagesQueueMap = new MapMaker().concurrencyLevel(1).makeMap();
     this.topicSubscribers = new HashSet<>();
@@ -72,7 +67,7 @@ public class InProcessBrokerApi implements BrokerApi {
     topicEventConsumers.register(eventConsumer);
     topicSubscribers.add(topicSubscriber(topic, eventConsumer));
 
-    EvictingQueue<EventMessage> messageQueue = EvictingQueue.create(10);
+    EvictingQueue<EventMessage> messageQueue = EvictingQueue.create(DEFAULT_MESSAGE_QUEUE_SIZE);
     messagesQueueMap.put(topic, messageQueue);
     topicEventConsumers.register(new EventBusMessageRecorder(messageQueue));
   }
@@ -89,7 +84,9 @@ public class InProcessBrokerApi implements BrokerApi {
 
   @Override
   public void replayAllEvents(String topic) {
-    messagesQueueMap.get(topic).stream().forEach(eventMessage -> send(topic, eventMessage));
+    if (messagesQueueMap.containsKey(topic)) {
+      messagesQueueMap.get(topic).stream().forEach(eventMessage -> send(topic, eventMessage));
+    }
   }
 
   private class EventBusMessageRecorder {
