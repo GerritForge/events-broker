@@ -16,6 +16,29 @@
       "revId": "7589243913684974c4f1a07fc9a3eea7ef7ad434",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3933f0be_6f19e72f",
+        "filename": "pom.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-09T11:20:58Z",
+      "side": 1,
+      "message": "What we do in gerrit-ci is exactly what you said. We could not use it until now because it was not supporting the pipelines. Now, after all the upgrades, the CI pipeline could be just moved to the main CI and use the existing template for verification.",
+      "range": {
+        "startLine": 41,
+        "startChar": 24,
+        "endLine": 41,
+        "endChar": 42
+      },
+      "revId": "7589243913684974c4f1a07fc9a3eea7ef7ad434",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
