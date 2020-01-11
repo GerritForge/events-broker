@@ -46,6 +46,30 @@
       "revId": "df8a2c6954d4ba37dd3da8e9ca54dd1da38e6b3d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f158aa9_089202fe",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/LibModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1005270
+      },
+      "writtenOn": "2020-01-11T07:40:44Z",
+      "side": 1,
+      "message": "In the latest patch set I\u0027m binding InProcessBrokerApi based on EventBus",
+      "parentUuid": "8b31dd79_318276e2",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 74
+      },
+      "revId": "df8a2c6954d4ba37dd3da8e9ca54dd1da38e6b3d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
