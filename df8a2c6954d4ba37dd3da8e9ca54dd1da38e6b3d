@@ -22,6 +22,30 @@
       "revId": "df8a2c6954d4ba37dd3da8e9ca54dd1da38e6b3d",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b31dd79_318276e2",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/LibModule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2020-01-11T00:44:02Z",
+      "side": 1,
+      "message": "Let me upload an alternative change that, instead, links the in-memory implementation based on the EventBus. WDYT?",
+      "parentUuid": "7e05b782_f96baedd",
+      "range": {
+        "startLine": 33,
+        "startChar": 6,
+        "endLine": 33,
+        "endChar": 74
+      },
+      "revId": "df8a2c6954d4ba37dd3da8e9ca54dd1da38e6b3d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
