@@ -26,7 +26,8 @@ public interface BrokerApi {
   /**
    * Creates a {@link EventMessage} for an event
    *
-   * @param event
+   * @param event event associated with the message
+   * @param instanceId Gerrit instanceId that originated the event
    * @return {@link EventMessage} object
    */
   default EventMessage newMessage(UUID instanceId, Event event) {
