@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "89fc17dc_3ccf140f",
+        "filename": "src/main/java/com/gerritforge/gerrit/eventbroker/BrokerApi.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2020-12-02T13:56:07Z",
+      "side": 1,
+      "message": "Where you have found that workaround? In: [1] I don\u0027t find it.\n\n[1] https://bugs.openjdk.java.net/browse/JDK-8212233",
+      "revId": "086482310aacd6607beaa2e0ad74e5dcd5baed43",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
