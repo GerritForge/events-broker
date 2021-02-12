@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "77d783e4_0a85bab2",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2021-02-12T13:23:41Z",
+      "side": 1,
+      "message": "Should this be abandoned, because the development was moved to gerrit-review?",
+      "revId": "b5708ad2d678ee5d9f70d72e3f4d240172aa7d90",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
